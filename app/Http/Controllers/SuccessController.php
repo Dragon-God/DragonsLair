@@ -10,9 +10,9 @@ class SuccessController extends Controller
     {
         return view('misc.success')->with('successCode', $successCode);
     }
-    public function postSuccess()
+    public function postCreateSuccess()
     {
-        return $this->index('postSuccess');
+        return $this->index('postCreateSuccess');
     }
     public function registrationSuccess()
     {

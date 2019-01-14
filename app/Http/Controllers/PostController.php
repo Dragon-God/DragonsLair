@@ -21,15 +21,20 @@ class PostController extends Controller
         ]);
         $post = new Post($request['body']);
         $request->user()->posts()->save($post);
-        return redirect()->route('dashboard')->with(['messages' => ['Post successfully created.'], 'type' => 'success']);
+        return redirect()->route('dashboard');
     }
     public function deletePost($postID)
     {
-        //if((DB::table('posts')->where('id', $postID)->value('user_id')) == (Auth::user()->id))  //Checks if the current user is the owner of the post.
-        if(DB::table('posts')->where('id', $postID)->value('user_id') == (Auth::user()->id))
+        /* if(DB::table('posts')->where('id', $postID)->value('user_id') == (Auth::user()->id))
         {
             DB::table('posts')->where('id', $postID)->delete();
             return redirect()->route('deleteSuccess');
+        } */
+        if(Post::where('id', $postID)->value('user_id') == (Auth::user()->id))
+        {
+            $postToDelete = Post::where('id', $postID)->first();
+            $postToDelete->delete();
+            return redirect()->route('postDeleteSuccess');
         }
         else
         {
@@ -40,18 +45,19 @@ class PostController extends Controller
     {
         if (Post::where('id', $postID)->value('user_id') == (Auth::user()->id))
         {
-            DB::table('posts')->where('id', $postID)->delete();
+            $postToEdit = Post::where('id', $postID)->first();
+            $postToEdit->delete();
             return redirect()->route('deleteSuccess');
         } else {
             return redirect()->route('wrongPermissions');
         }
     }
-    public function index($postID)
+    public function indexes($postID)
     {
-        return view('posts.index', ['post' => DB::table('posts')->where('id', $postID)->first()]);
+        return view('posts.getPost', ['post' => DB::table('posts')->where('id', $postID)->first()]);
     }
     public function getPost()
     {
-        return $this->index($_POST['getPostID']);
+        return $this->indexes($_POST['getPostID']);
     }
 }

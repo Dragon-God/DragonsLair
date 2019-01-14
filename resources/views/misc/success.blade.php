@@ -9,7 +9,7 @@
         <div class="col-md-4 col-md-offset-4 success">
             <h1>Success Page</h1>
             @switch($successCode)
-                @case('postSuccess')
+                @case('postCreateSuccess')
                     <p>
                         Post successfuly created. <br>
                         {!!link_to_route('dashboard', 'Go to Dashboard')!!}

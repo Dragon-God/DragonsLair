@@ -12,7 +12,6 @@
 ?>
     <h1>Dashboard</h1>
     <h2>Welcome {{$user->userName}}</h2>
-    @include('/_resources.includes._message')
 <?php
     $errs = $errors->all();
 ?>
