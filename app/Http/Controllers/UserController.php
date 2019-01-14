@@ -60,7 +60,7 @@ class UserController extends Controller
     }
     public function displayPosts($userID)
     {
-        return DB::table('posts')->where('user_id', $userID)->orderBy('created_at')->get();
+        return DB::table('posts')->where('user_id', $userID)->orderBy('created_at')->paginate(5);
         //Returns all posts belonging to the user corresponding to $userID.
     }
     public function page($username)

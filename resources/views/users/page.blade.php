@@ -30,6 +30,7 @@
             @empty
                 <h3>Sorry, this user has no posts to display.</h3>
             @endforelse
+            {!!$posts->links('_resources.vendor.pagination.bootstrap-4')!!}
         </div>
     </section>
 @endsection

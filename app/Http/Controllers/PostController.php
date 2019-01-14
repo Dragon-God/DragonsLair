@@ -16,7 +16,9 @@ class PostController extends Controller
     public function dashboard()
     {
         $user = DB::table('users')->where('email', Auth::user()->email)->first();     //Extracts the data of the currently logged in user.
-        return view('home.dashboard')->with(['user' => $user]);
+        $posts = DB::table('posts')->orderBy('created_at', 'DESC')->get();
+        $posts = DB::table('posts')->orderBy('created_at', 'DESC')->paginate(3);
+        return view('home.dashboard')->with(['user' => $user, 'posts' => $posts]);
     }
     public function createPost(Request $request)
     {

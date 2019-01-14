@@ -7,6 +7,8 @@
 @section('content')
 <?php
     use App\models\User;
+    use Illuminate\Support\Facades\DB;
+    use App\models\Post;
 ?>
     <h1>Dashboard</h1>
     <h2>Welcome {{$user->userName}}</h2>
@@ -62,30 +64,33 @@
             <header>
                 <h3>What other people are saying...</h3>
             </header>
-            <article class="post">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur cumque soluta doloribus nobis alias accusantium dolor consequuntur sequi quaerat possimus voluptates asperiores ad minus, iusto suscipit culpa voluptatem veniam! Veniam.</p>
-                <div class="info">
-                    Posted by Matthew on January 3rd 2019.
-                </div>
-                <div class="interaction">
-                    <a href="#">Like</a> |
-                    <a href="#">Disike</a> |
-                    <a href="#">Edit</a> |
-                    <a href="#">Delete</a>
-                </div>
-            </article>
-            <article class="post">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur cumque soluta doloribus nobis alias accusantium dolor consequuntur sequi quaerat possimus voluptates asperiores ad minus, iusto suscipit culpa voluptatem veniam! Veniam.</p>
-                <div class="info">
-                    Posted by Matthew on January 3rd 2019.
-                </div>
-                <div class="interaction">
-                    <a href="#">Like</a> |
-                    <a href="#">Disike</a> |
-                    <a href="#">Edit</a> |
-                    <a href="#">Delete</a>
-                </div>
-            </article>
+<?php
+    // $posts = $posts::paginate(4);
+?>
+            @forelse ($posts as $post)
+                <article class="post">
+                    <p>
+                        {{$post->body}}
+                    </p>
+                    <div class="info">
+<?php
+    $user = DB::table('users')->where('id', $post->user_id)->first();
+?>
+                        Posted by {{$user->userName}} on {{$post->created_at}}.
+                    </div>
+                    <div class="interaction">
+                        <a href="#">Like</a> |
+                        <a href="#">Disike</a> |
+                        <a href="#">Edit</a> |
+                        <a href="#">Delete</a>
+                    </div>
+                </article>
+            @empty
+                <p>
+                    Sorry, there are no posts to display.
+                </p>
+            @endforelse
+            {!!$posts->links('_resources.vendor.pagination.bootstrap-4')!!}
         </div>
     </section>
 @endsection
