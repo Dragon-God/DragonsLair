@@ -19,6 +19,7 @@
                     </li>
                 @endforeach
             </ul>
+            {!!$users->links('_resources.vendor.pagination.bootstrap-4')!!}
         </div>
     </section>
 @endsection

@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Auth;
 */
 class PostController extends Controller
 {
-    public function dashboard()
-    {
-        $user = DB::table('users')->where('email', Auth::user()->email)->first();     //Extracts the data of the currently logged in user.
-        $posts = DB::table('posts')->orderBy('created_at', 'DESC')->get();
-        $posts = DB::table('posts')->orderBy('created_at', 'DESC')->paginate(3);
-        return view('home.dashboard')->with(['user' => $user, 'posts' => $posts]);
-    }
     public function createPost(Request $request)
     {
         $this->validate($request,
@@ -29,5 +22,20 @@ class PostController extends Controller
         $post = new Post($request['body']);
         $request->user()->posts()->save($post);
         return redirect()->route('postSuccess');
+    }
+    public function deletePost($postID)
+    {
+        if((DB::table('posts')->where('id', $postID)->value('user_id')) == (Auth::user()->id))  //Chceks if the current user is the owner of the post.
+        {
+
+        }
+    }
+    public function index($postID)
+    {
+        return view('posts.index', ['post' => DB::table('posts')->where('id', $postID)->first()]);
+    }
+    public function getPost()
+    {
+        return $this->index($_POST['postID']);
     }
 }

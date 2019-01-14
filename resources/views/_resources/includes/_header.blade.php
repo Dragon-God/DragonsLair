@@ -1,3 +1,11 @@
+<?php
+    use App\models\User;
+    use App\models\Post;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\DB;
+    $postCount = count(DB::table('posts')->get());    //Counts the number of posts in the database.
+?>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Menu</a>
@@ -15,6 +23,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('users')}}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{{route('getPost')}}" method="POST">
+                        <button type="submit" class="btn btn-primary">Go To</button>
+                        <input type="number" name="postID" min="1" max="{{$postCount}}">
+                        <input type="hidden" name="_token" value={{Session::token()}}>
+                    </form>
+
         		</li>
         		<li class="nav-item dropdown">
         		    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

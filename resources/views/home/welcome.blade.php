@@ -8,6 +8,7 @@
 <?php
     $errs = $errors->all();
     // print(var_dump($errors));
+    $requiredCount = 0;     //Variable to count how many times the "validation.required" error has been triggered. It is a control variable used to suppress duplicate presentations of the error.
 ?>
     @if ($errs != [])
         <div class="row">
@@ -23,7 +24,13 @@
                                     Please input a valid email address.
                                     @break
                                 @case('validation.required')
-                                    Sorry, all fields are required.
+<?php
+    if($requiredCount == 0)
+    {
+        print("Sorry all fields are required.");
+        $requiredCount++;
+    }
+?>
                                     @break
                                 @case('validation.max.string')
                                     Sorry, the maximum length of the fields are as follows:

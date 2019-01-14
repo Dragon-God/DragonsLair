@@ -35,9 +35,11 @@ Route::get('success/registrationSuccess', 'SuccessController@registrationSuccess
 
 Route::post('register', 'UserController@register')->name('register');
 Route::post('login', 'UserController@login')->name('login');
-Route::get('users/{username?}', 'UserController@page')->name('page');
-Route::get('users', 'UserController@index')->name('users')->middleware('auth');
+Route::get('users/{username?}', 'UserController@page')->name('page')->middleware('auth');
+Route::get('usersList', 'UserController@index')->name('users')->middleware('auth');
+Route::get('dashboard', 'UserController@dashboard')->name('dashboard')->middleware('auth');
+
 
 Route::post('createPost', 'PostController@createPost')->name('post.create')->middleware('auth');
-Route::get('dashboard', 'PostController@dashboard')->name('dashboard')->middleware('auth');
-
+Route::get('posts/{ID}', 'PostController@index')->name('post')->middleware('auth');
+Route::post('posts/getPost', 'PostController@getPost')->name('getPost')->middleware('auth');

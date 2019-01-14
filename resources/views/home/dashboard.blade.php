@@ -64,27 +64,8 @@
             <header>
                 <h3>What other people are saying...</h3>
             </header>
-<?php
-    // $posts = $posts::paginate(4);
-?>
             @forelse ($posts as $post)
-                <article class="post">
-                    <p>
-                        {{$post->body}}
-                    </p>
-                    <div class="info">
-<?php
-    $user = DB::table('users')->where('id', $post->user_id)->first();
-?>
-                        Posted by {{$user->userName}} on {{$post->created_at}}.
-                    </div>
-                    <div class="interaction">
-                        <a href="#">Like</a> |
-                        <a href="#">Disike</a> |
-                        <a href="#">Edit</a> |
-                        <a href="#">Delete</a>
-                    </div>
-                </article>
+                @include('_resources.includes._post')
             @empty
                 <p>
                     Sorry, there are no posts to display.
