@@ -63,13 +63,16 @@ class UserController extends Controller
         return DB::table('posts')->where('user_id', $userID)->orderBy('created_at')->paginate(5);
         //Returns all posts belonging to the user corresponding to $userID.
     }
-    public function page($username)
+    public function page($username = '')
     {
-        return view('users.page')->with
+        return ($username == '')?(view('users.page')->with
             ([
-                'posts' => displayPosts(getID($username)),
+                'posts' => $this->displayPosts(getID($username)),
                 'username' => $username
-            ]);
+            ])):(view('users.page')->with([
+            'posts' => $this->displayPosts(Auth::user()->id),
+            'username' => DB::table('users')->where('id', Auth::user()->id)->value('userName')
+        ]));
         //Returns all posts belonging to the user corresponding to $username.
     }
     public function search($string)     //Returns all usernames prefixed by $string.
