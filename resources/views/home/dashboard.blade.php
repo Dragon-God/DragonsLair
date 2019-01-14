@@ -5,8 +5,11 @@
 @endsection
 
 @section('content')
+<?php
+    use App\models\User;
+?>
     <h1>Dashboard</h1>
-    <h2>Welcome {{$username}}</h2>
+    <h2>Welcome {{$user->userName}}</h2>
 
     {{-- <h4>{!!link_to_route('foo', 'Session Test')!!}</h4> --}}
 <?php

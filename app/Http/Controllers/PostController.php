@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Post;
-//use App\models\User;
+use App\models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 /*
 *   A controller for making posts.
 */
 class PostController extends Controller
 {
-    //Validations
+    public function dashboard()
+    {
+        $user = DB::table('users')->where('email', Auth::user()->email)->first();     //Extracts the data of the currently logged in user.
+        return view('home.dashboard')->with(['user' => $user]);
+    }
     public function createPost(Request $request)
     {
         $this->validate($request,

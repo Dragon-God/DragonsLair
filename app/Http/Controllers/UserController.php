@@ -3,16 +3,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\User;
+use App\models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function dashboard()
-    {
-        $username = DB::table('users')->where('email', Auth::user()->email)->value('username');     //Extracts the username of the currently logged in user.
-        return view('home.dashboard')->with(['username' => $username, 'foo' => Auth::user()->email]);
-    }
     public function register(Request $request)
     {
         /* $user = new User();
@@ -52,5 +48,32 @@ class UserController extends Controller
             print('<br>The email address or password or incorrect.<br>');
             return redirect()->back();
         }); */
+    }
+    public function index()
+    {
+        return view('users.index')->with('users', DB::table('users')->orderBy('username')->get());
+    }
+    public function getID($username = '')
+    {
+        return ($username == '')?(Auth::user()->id):(DB::table('users')->where('username', $username)->value('id'));
+        //Returns the userID corresponding to the supplied username, else returns the userID of the user making the request.
+    }
+    public function displayPosts($userID)
+    {
+        return DB::table('posts')->where('user_id', $userID)->orderBy('created_at')->get();
+        //Returns all posts belonging to the user corresponding to $userID.
+    }
+    public function page($username)
+    {
+        return view('users.page')->with
+            ([
+                'posts' => displayPosts(getID($username)),
+                'username' => $username
+            ]);
+        //Returns all posts belonging to the user corresponding to $username.
+    }
+    public function search($string)     //Returns all usernames prefixed by $string.
+    {
+
     }
 }
