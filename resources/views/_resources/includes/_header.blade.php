@@ -27,7 +27,7 @@
                 <li class="nav-item">
                     <form action="{{route('getPost')}}" method="POST">
                         <button type="submit" class="btn btn-primary">Go To</button>
-                        <input type="number" name="postID" min="1" max="{{$postCount}}">
+                        <input type="number" name="getPostID" min="1" max="{{$postCount}}">
                         <input type="hidden" name="_token" value={{Session::token()}}>
                     </form>
 

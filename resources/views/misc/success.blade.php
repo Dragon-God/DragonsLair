@@ -21,6 +21,21 @@
                         {!!link_to_route('dashboard', 'Go to Dashboard')!!}
                     </p>
                     @break
+                @case('postDeleteSuccess')
+                    <p>
+                        Post successfuly deleted. <br>
+                        {!!link_to_route('dashboard', 'Go to Dashboard')!!}
+                        {{-- <button type="button" class="btn btn-link">Link</button> --}}
+                        {!!link_to_route('back', 'Return back')!!}
+                    </p>
+                    @break
+                @case('postEditSuccess')
+                    <p>
+                        Post successfuly edited. <br>
+                        {!!link_to_route('dashboard', 'Go to Dashboard')!!}
+                        {!!link_to_route('back', 'Return back')!!}
+                    </p>
+                    @break
                 @case('')
                     <p>
                         Were you looking for the success page? Well if so congratulations, you've found it. ;)  <br>

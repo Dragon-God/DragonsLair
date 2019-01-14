@@ -18,4 +18,8 @@ class FailController extends Controller
     {
         return $this->index('incorrectCredentials');
     }
+    public function wrongPermissions()
+    {
+        return $this->index('wrongPermissions');
+    }
 }

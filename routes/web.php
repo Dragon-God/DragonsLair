@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\miscController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,15 +16,17 @@
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::view('template', 'misc.template')->name('template');
 Route::get('foo', 'TestController@foo')->name('foo');
+Route::get('back', 'miscController@back')->name('back');
 
 
-Route::get('fail/{errorCode?}', 'FailController@index')->name('fail');   //Sends the error code as a parameter to the failController's index function.
-/*
-*   Below is a hacky method to handle the failure page routing.
-*   It is terrible coding practice and is only used as a placeholder until I can code the routing properly.
-*/
-Route::get('fail/unauthenticated', 'FailController@unauthenticated')->name('unauthenticated');
-Route::get('fail/incorrectCredentials', 'FailController@incorrectCredentials')->name('incorrectCredentials');
+// Route::get('fail/{errorCode?}', 'FailController@index')->name('fail');   //Sends the error code as a parameter to the failController's index function.
+// /*
+// *   Below is a hacky method to handle the failure page routing.
+// *   It is terrible coding practice and is only used as a placeholder until I can code the routing properly.
+// */
+// Route::get('fail/unauthenticated', 'FailController@unauthenticated')->name('unauthenticated');
+// Route::get('fail/incorrectCredentials', 'FailController@incorrectCredentials')->name('incorrectCredentials');
+// Route::get('fail/wrongPermissions', 'FailController@wrongPermissions')->name('wrongPermissions');
 
 Route::get('success/{successCode?}', 'SuccessController@index')->name('success');   //Sends the success code as a parameter to the SuccessController's index function.
 /*
@@ -43,3 +47,5 @@ Route::get('dashboard', 'UserController@dashboard')->name('dashboard')->middlewa
 Route::post('createPost', 'PostController@createPost')->name('post.create')->middleware('auth');
 Route::get('posts/{ID}', 'PostController@index')->name('post')->middleware('auth');
 Route::post('posts/getPost', 'PostController@getPost')->name('getPost')->middleware('auth');
+Route::post('posts/deletePost', 'PostController@deletePost')->name('deletePost')->middleware('auth');
+Route::post('posts/editPost/{postID}', 'PostController@editPost')->name('editPost')->middleware('auth');

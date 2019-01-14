@@ -8,7 +8,8 @@
         <title>@yield('title')</title>
     </head>
     <body>
-        @include('_resources.includes._header')
+        @include('/_resources.includes._header')
+        {{-- @include('/_resources.includes._message') --}}
     	<div class="container">
     		@yield('content')
     	</div>

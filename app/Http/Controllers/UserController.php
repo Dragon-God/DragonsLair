@@ -27,7 +27,7 @@ class UserController extends Controller
         if($user->save())
         {
             Auth::login($user);
-            return redirect()->route('registrationSuccess');
+            return redirect()->route('dashboard')->with(['messages' => ['Congratulations! You have successfully registered.'], 'type' => 'success']);
         }
         else
         {

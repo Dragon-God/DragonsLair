@@ -14,6 +14,11 @@
                         Sorry, you need to be logged in to access that page.
                     </p>
                     @break
+                @case('wrongPermissions')
+                    <p>
+                        Sorry, you do not have the permissions required for that.
+                    </p>
+                    @break
                 @case('incorrectCredentials')
                     <p>
                         The username or password you entered is incorrect.

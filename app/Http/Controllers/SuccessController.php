@@ -18,4 +18,12 @@ class SuccessController extends Controller
     {
         return $this->index('registrationSuccess');
     }
+    public function postDeleteSuccess()
+    {
+        return $this->index('postDeleteSuccess');
+    }
+    public function postEditSuccess()
+    {
+        return $this->index('postEditSuccess');
+    }
 }

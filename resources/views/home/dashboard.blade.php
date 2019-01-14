@@ -12,8 +12,7 @@
 ?>
     <h1>Dashboard</h1>
     <h2>Welcome {{$user->userName}}</h2>
-
-    {{-- <h4>{!!link_to_route('foo', 'Session Test')!!}</h4> --}}
+    @include('/_resources.includes._message')
 <?php
     $errs = $errors->all();
 ?>

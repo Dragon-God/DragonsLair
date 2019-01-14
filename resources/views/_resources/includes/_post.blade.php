@@ -21,9 +21,9 @@
         <a href="#">Like</a> |
         <a href="#">Disike</a> |
         @if(Auth::user()->id == $post->user_id)
-            <a href="#">Edit</a> |
-            <a href="#">Delete</a>
+            <a href="{{route('deletePost', ['postID' => $post->id])}}">Edit</a> |
+            {{-- <form action="delete"></form> --}}
+            <a href="/posts/deletePost/{{$post->id}}">Delete</a>
         @endif
-
     </div>
 </article>
