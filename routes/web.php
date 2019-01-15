@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\miscController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,4 @@ Route::post('createPost', 'PostController@createPost')->name('post.create')->mid
 Route::get('posts/{ID}', 'PostController@indexes')->name('post')->middleware('auth');
 Route::post('posts/getPost', 'PostController@getPost')->name('getPost')->middleware('auth');
 Route::post('posts/deletePost/{postID}', 'PostController@deletePost')->name('deletePost')->middleware('auth');
-Route::post('posts/editPost/', function(Request $request)
-{
-    return response()->json(['message' => $request['body']]);
-})->name('editPost')->middleware('auth');
+Route::post('posts/editPost/', 'PostController@editPost')->name('editPost')->middleware('auth');
