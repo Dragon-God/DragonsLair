@@ -43,15 +43,7 @@ class PostController extends Controller
     }
     public function editPost(Request $request)
     {
-        // if (Post::where('id', $postID)->value('user_id') == (Auth::user()->id))
-        // {
-        //     $postToEdit = Post::where('id', $postID)->first();
-        //     $postToEdit->update();
-        //     return redirect()->route('deleteSuccess');
-        // } else {
-        //     return redirect()->route('wrongPermissions');
-        // }
-        return response()->json(['message' => $request['body']]);
+        DB::table('posts')->where('id', $request['postID'])->update(['body' => $request['body']]);
     }
     public function indexes($postID)
     {

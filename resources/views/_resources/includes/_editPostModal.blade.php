@@ -8,8 +8,9 @@
         event.preventDefault();     //Prevent default behaviour of the event.
         var postBody = event.target.parentNode.parentNode.parentNode.childNodes[1].textContent;     //Access the post content corresponding to the post whose body was clicked.
         $('#editedPost').val(postBody);     //Set the contents of the edit modal to the preexisting post content.
-        editPostID = event.target.id;   //Retrieve the ID of the post to be edited.
+        editPostID = event.target.dataset['postid'];   //Retrieve the ID of the post to be edited.
         token = "{{Session::token()}}";    //Retrieve the CSRF token.
+        returnTo = '{{url()->current()}}';
 /*         alert(editPostID);
         $.ajax
         ({
@@ -61,7 +62,6 @@
         $.ajax
         ({
             method: 'POST',
-            // url:    ('http://127.27.18.28/posts/editPost/'+editPostID),
             url:    "{{route('editPost')}}",
             data:
             {
@@ -72,7 +72,7 @@
         })
         .done(function(msg)
         {
-            alert(msg['message']);
+            document.location.reload(true);
         });
     }
 </script>
