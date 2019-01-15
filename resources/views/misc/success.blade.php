@@ -21,19 +21,29 @@
                         {!!link_to_route('dashboard', 'Go to Dashboard')!!}
                     </p>
                     @break
+                @case('loginSuccess')
+                    <p>
+                        Congratulations! You have successfully logged in. <br>
+                        {!!link_to_route('dashboard', 'Go to Dashboard')!!}
+                    </p>
+                    @break
+                @case('logoutSuccess')
+                    <p>
+                        Congratulations! You have successfully logged out. <br>
+                        {!!link_to_route('welcome', 'Go to Main')!!}
+                    </p>
+                    @break
                 @case('postDeleteSuccess')
                     <p>
                         Post successfuly deleted. <br>
                         {!!link_to_route('dashboard', 'Go to Dashboard')!!}
                         {{-- <button type="button" class="btn btn-link">Link</button> --}}
-                        {!!link_to_route('back', 'Return back')!!}
                     </p>
                     @break
                 @case('postEditSuccess')
                     <p>
                         Post successfuly edited. <br>
                         {!!link_to_route('dashboard', 'Go to Dashboard')!!}
-                        {!!link_to_route('back', 'Return back')!!}
                     </p>
                     @break
                 @case('')

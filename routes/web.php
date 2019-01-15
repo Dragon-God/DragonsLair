@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\miscController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,7 @@ use App\Http\Controllers\miscController;
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::view('template', 'misc.template')->name('template');
+Route::view('shell', 'misc.shell')->name('shell');
 Route::get('foo', 'TestController@foo')->name('foo');
 Route::get('back', 'miscController@back')->name('back');
 
@@ -34,6 +35,8 @@ Route::get('success/{successCode?}', 'SuccessController@index')->name('success')
  *   It is terrible coding practice and is only used as a placeholder until I can code the routing properly.
  */
 Route::get('success/registrationSuccess', 'SuccessController@registrationSuccess')->name('registrationSuccess');
+Route::get('success/loginSuccess', 'SuccessController@loginSuccess')->name('loginSuccess');
+Route::get('success/logoutSuccess', 'SuccessController@logoutSuccess')->name('logoutSuccess');
 Route::get('success/postCreateSuccess', 'SuccessController@postCreateSuccess')->name('postCreateSuccess');
 Route::get('success/postDeleteSuccess', 'SuccessController@postDeleteSuccess')->name('postDeleteSuccess');
 Route::get('success/postEditSuccess', 'SuccessController@postEditSuccess')->name('postEditSuccess');
@@ -41,6 +44,7 @@ Route::get('success/postEditSuccess', 'SuccessController@postEditSuccess')->name
 
 Route::post('register', 'UserController@register')->name('register');
 Route::post('login', 'UserController@login')->name('login');
+Route::post('logout', 'UserController@logout')->name('logout');
 Route::get('users/{username?}', 'UserController@page')->name('page')->middleware('auth');
 Route::get('usersList', 'UserController@index')->name('users')->middleware('auth');
 Route::get('dashboard', 'UserController@dashboard')->name('dashboard')->middleware('auth');
@@ -50,4 +54,7 @@ Route::post('createPost', 'PostController@createPost')->name('post.create')->mid
 Route::get('posts/{ID}', 'PostController@indexes')->name('post')->middleware('auth');
 Route::post('posts/getPost', 'PostController@getPost')->name('getPost')->middleware('auth');
 Route::post('posts/deletePost/{postID}', 'PostController@deletePost')->name('deletePost')->middleware('auth');
-Route::post('posts/editPost/{postID}', 'PostController@editPost')->name('editPost')->middleware('auth');
+Route::post('posts/editPost/', function(Request $request)
+{
+    return response()->json(['message' => $request['body']]);
+})->name('editPost')->middleware('auth');

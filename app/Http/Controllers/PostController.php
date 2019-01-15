@@ -21,7 +21,7 @@ class PostController extends Controller
         ]);
         $post = new Post($request['body']);
         $request->user()->posts()->save($post);
-        return redirect()->route('dashboard');
+        return redirect()->route('postCreateSuccess');
     }
     public function deletePost($postID)
     {
@@ -41,16 +41,17 @@ class PostController extends Controller
             return redirect()->route('wrongPermissions');
         }
     }
-    public function editPost($postID)
+    public function editPost(Request $request)
     {
-        if (Post::where('id', $postID)->value('user_id') == (Auth::user()->id))
-        {
-            $postToEdit = Post::where('id', $postID)->first();
-            $postToEdit->delete();
-            return redirect()->route('deleteSuccess');
-        } else {
-            return redirect()->route('wrongPermissions');
-        }
+        // if (Post::where('id', $postID)->value('user_id') == (Auth::user()->id))
+        // {
+        //     $postToEdit = Post::where('id', $postID)->first();
+        //     $postToEdit->update();
+        //     return redirect()->route('deleteSuccess');
+        // } else {
+        //     return redirect()->route('wrongPermissions');
+        // }
+        return response()->json(['message' => $request['body']]);
     }
     public function indexes($postID)
     {

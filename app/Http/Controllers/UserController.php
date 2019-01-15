@@ -43,7 +43,12 @@ class UserController extends Controller
                 'password' => 'required|max:250'
             ]
         );
-        return Auth::attempt(['email' => $request['email'], 'password' => $request['password']])?(redirect()->route('dashboard')):(redirect()->route('incorrectCredentials'));
+        return Auth::attempt(['email' => $request['email'], 'password' => $request['password']])?(redirect()->route('loginSuccess')):(redirect()->route('incorrectCredentials'));
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('logoutSuccess');
     }
     public function dashboard()
     {

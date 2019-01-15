@@ -9,5 +9,6 @@
         <div class="col-md-6 col-md-3-offset">
             @include('_resources.includes._post')
         </div>
+        @include('_resources.includes._editPostModal')
     </section>
 @endsection

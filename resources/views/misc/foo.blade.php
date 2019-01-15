@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    @if(Session::has('foo'))
-        {{Session::get('foo')}}
+    @if(isset($_POST['editPostID']))
+        spam
     @endif
 @endsection

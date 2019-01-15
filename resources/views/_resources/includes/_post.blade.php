@@ -4,29 +4,27 @@
     use App\models\Post;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\DB;
+
+    $postAuthor = DB::table('users')->where('id', $post->user_id)->first();
 ?>
 
 <article class="post">
-    <p>
-        {{$post->body}}
-    </p>
+    <p>{{$post->body}}</p>
     <div class="info">
-<?php
-    $postAuthor = DB::table('users')->where('id', $post->user_id)->first();
-?>
         Posted by {{$postAuthor->userName}} on {{$post->created_at}}.
     </div>
     <div class="interaction">
-        <form action="{{route('deletePost', ['postID' => $post->id])}}" method="post">
-            <a href="posts/{{$post->id}}">&nbsp;&nbsp;&nbsp;Permalink</a> |
-            <a href="#">&nbsp;&nbsp;&nbsp;Like</a> |
-            <a href="#">&nbsp;&nbsp;&nbsp;Disike</a> |
+        <form action="{{route('deletePost', ['postID' => $post->id])}}" method="post" class="post-interactions">
+            &nbsp;&nbsp;&nbsp;<a href="posts/{{$post->id}}">Permalink</a> &nbsp;&nbsp;&nbsp;|
+            &nbsp;&nbsp;&nbsp;<a href="#">Like</a> &nbsp;&nbsp;&nbsp;|
+            &nbsp;&nbsp;&nbsp;<a href="#">Disike</a> &nbsp;&nbsp;&nbsp;|
             @if(Auth::user()->id == $post->user_id)
-                <a href="{{route('deletePost', ['postID' => $post->id])}}">&nbsp;&nbsp;&nbsp;Edit</a> |
+            <button type="button" class="btn btn-link editPost" id="{{$post->id}}" onclick="editClick(event)">Edit</button> | {{-- <a href={{$editURL}} class={{$editClass}}>Edit</a> --}}
                 <button type="submit" class="btn btn-link">Delete</button>
                 <input type="hidden" name="_token" value={{Session::token()}}>
                 {{-- <a href="/posts/deletePost/{{$post->id}}">Delete</a> --}}
             @endif
+            <input type="hidden" name="_token" value="{{Session::token()}}">
         </form>
     </div>
 </article>

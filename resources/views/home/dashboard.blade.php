@@ -71,5 +71,7 @@
             @endforelse
             {!!$posts->links('_resources.vendor.pagination.bootstrap-4')!!}
         </div>
+        @include('_resources.includes._editPostModal')
     </section>
+
 @endsection

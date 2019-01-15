@@ -26,4 +26,12 @@ class SuccessController extends Controller
     {
         return $this->index('postEditSuccess');
     }
+    public function logoutSuccess()
+    {
+        return $this->index('logoutSuccess');
+    }
+    public function loginSuccess()
+    {
+        return $this->index('loginSuccess');
+    }
 }
