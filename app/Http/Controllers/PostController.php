@@ -77,6 +77,10 @@ class PostController extends Controller
                 ]);
             }
         }
+        else
+        {
+            return redirect()->route('wrongPermissions');
+        }
     }
     public function indexes($postID)
     {
