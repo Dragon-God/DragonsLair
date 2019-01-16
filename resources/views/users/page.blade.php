@@ -10,6 +10,8 @@
 ?>
     <h1>Page of {{$username}}</h1>
 
+    @include('_resources.includes._postUpdateErrors')
+
     <section class="row posts">
         <div class="col-md-6 col-md-3-offset">
             @forelse ($posts as $post)

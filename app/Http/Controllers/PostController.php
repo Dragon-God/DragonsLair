@@ -43,7 +43,14 @@ class PostController extends Controller
     }
     public function editPost(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'body' => 'required|min:3|max:3000'
+            ]
+        );
         DB::table('posts')->where('id', $request['postID'])->update(['body' => $request['body']]);
+        return response()->json(['message' => 'Post Successfully Edited.', 'status' => (DB::table('posts')->where('id', $request['postID'])->value('body') == $request['body'])?(true):(false)]);   //Set status to true if the post was succesfully edited.
     }
     public function indexes($postID)
     {

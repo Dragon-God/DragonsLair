@@ -72,7 +72,11 @@
         })
         .done(function(msg)
         {
-            document.location.reload(true);
+            if(msg['status'])
+            {
+                alert(msg['message']);
+                document.location.reload(true);
+            }
         });
     }
 </script>

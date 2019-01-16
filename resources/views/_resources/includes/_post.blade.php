@@ -7,7 +7,6 @@
 
     $postAuthor = DB::table('users')->where('id', $post->user_id)->first();
 ?>
-
 <div id="{{($post->id).'postAncestorDiv'}}">
     <article class="post" id="{{($post->id).'postArticle'}}">
     <p>{{$post->body}}</p>
