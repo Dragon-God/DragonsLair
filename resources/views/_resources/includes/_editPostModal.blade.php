@@ -3,29 +3,15 @@
 <script>
     var editPostID = -1;    //A nonexistent post value.
     var token = "";
+    var newPostBody = null;
+    var check = false;
     function editClick(event)   //If the edit button is clicked.
     {
         event.preventDefault();     //Prevent default behaviour of the event.
-        var postBody = event.target.parentNode.parentNode.parentNode.childNodes[1].textContent;     //Access the post content corresponding to the post whose body was clicked.
-        $('#editedPost').val(postBody);     //Set the contents of the edit modal to the preexisting post content.
+        var initialPostBody = event.target.parentNode.parentNode.parentNode.childNodes[1].textContent;     //Access the post content corresponding to the post whose body was clicked.
+        $('#editedPost').val(initialPostBody);     //Set the contents of the edit modal to the preexisting post content.
         editPostID = event.target.dataset['postid'];   //Retrieve the ID of the post to be edited.
         token = "{{Session::token()}}";    //Retrieve the CSRF token.
-        returnTo = '{{url()->current()}}';
-/*         alert(editPostID);
-        $.ajax
-        ({
-            method: "post"
-            data:
-            {
-                editPostID: editPostID
-            }
-            url: "http://127.27.18.28/foo"
-            success: ()
-            {
-                alert("update successful");
-                $('#editingPost').modal('show');
-            }
-        }); */
         $('#editingPost').modal('show');    //Display the edit post modal.
     }
 </script>
@@ -58,6 +44,7 @@
 <script>
     function saveEditedPost()
     {
+        newPostBody = $('#editedPost').val();
         // console.log("editPostID:\t"+editPostID+".\ntoken:\t"+token+".\n\n");
         $.ajax
         ({
@@ -65,7 +52,7 @@
             url:    "{{route('editPost')}}",
             data:
             {
-                body:   $('#editedPost').val(),     //Current post body.
+                body:   newPostBody,     //Current post body.
                 postID: editPostID,     //ID of the post to be edited.
                 _token: token   //Cross Site Request Forgery (CSRF) token.
             }
@@ -75,8 +62,17 @@
             if(msg['status'])
             {
                 alert(msg['message']);
-                document.location.reload(true);
+                var postToBeEdited = editPostID + 'postParagraph'   //Retrieve the id of the paragraph element of the post to be edited.
+                document.getElementById(postToBeEdited).textContent  = msg['newPostBody'];  //Modify the text content of said paragraph element to be the new post.
+                $('#editingPost').modal('hide');
+                check = true;
+                //document.location.reload(true);
             }
+
         });
+        if(check)
+        {
+            alert('Post Failed to be edited.');
+        }
     }
 </script>

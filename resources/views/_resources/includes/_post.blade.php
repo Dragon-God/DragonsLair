@@ -9,7 +9,7 @@
 ?>
 <div id="{{($post->id).'postAncestorDiv'}}">
     <article class="post" id="{{($post->id).'postArticle'}}">
-    <p>{{$post->body}}</p>
+    <p id="{{($post->id).'postParagraph'}}">{{$post->body}}</p>
     <div class="info">
         Posted by {{$postAuthor->userName}} on {{$post->created_at}}.
     </div>

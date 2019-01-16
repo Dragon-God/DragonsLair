@@ -43,18 +43,46 @@ class PostController extends Controller
     }
     public function editPost(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                'body' => 'required|min:3|max:3000'
-            ]
-        );
-        DB::table('posts')->where('id', $request['postID'])->update(['body' => $request['body']]);
-        return response()->json(['message' => 'Post Successfully Edited.', 'status' => (DB::table('posts')->where('id', $request['postID'])->value('body') == $request['body'])?(true):(false)]);   //Set status to true if the post was succesfully edited.
+        if (Post::where('id', $request['postID'])->value('user_id') == (Auth::user()->id))
+        {
+            $this->validate
+            (
+                $request,
+                [
+                    'body' => 'required|min:3|max:3000'
+                ]
+            );
+            DB::table('posts')
+                ->where('id', $request['postID'])
+                ->update(['body' => $request['body']]);
+
+            if(DB::table('posts')
+                    ->where('id', $request['postID'])
+                    ->value('body') == $request['body'])
+            {
+                return response()->json
+                ([
+                    'message' => 'Post Successfully Edited.',
+                    'status' => true,   //Set status to true if the post was succesfully edited.
+                    'newPostBody' => DB::table('posts')
+                                        ->where('id', $request['postID'])
+                                        ->value('body')
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'message' => 'Post Failed to be edited.',
+                    'status' => false,   //Set status to true if the post was succesfully edited.
+                ]);
+            }
+        }
     }
     public function indexes($postID)
     {
-        return view('posts.getPost', ['post' => DB::table('posts')->where('id', $postID)->first()]);
+        return view('posts.getPost', ['post' => DB::table('posts')
+                                                    ->where('id', $postID)
+                                                    ->first()]);
     }
     public function getPost()
     {
